@@ -1,0 +1,15 @@
+
+#logo {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  text-align: center;
+  overflow: hidden;
+}
+
+body {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
