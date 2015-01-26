@@ -12,13 +12,13 @@ function myArc(center, radius, rotPos, radWidth, rotWidth, round){
     rounding = radWidth / (2 * radius);
   }
 
-  if(rotWidth > 3 * rounding){
+  if(rotWidth > 2 * rounding){
     points = points.concat(cornerGen(radius, rotPos, radWidth, rounding, true));
     points = points.concat(bodyGen(radius, rotPos + rounding, radWidth, rotWidth - 2 * rounding));
     points = points.concat(cornerGen(radius, rotPos + rotWidth - rounding, radWidth, rounding, false));  
   } else {
-    points = points.concat(cornerGen(radius, rotPos, radWidth, rotWidth / 3, true));
-    points = points.concat(cornerGen(radius, rotPos + 2 * rotWidth / 3, radWidth, rotWidth / 3, false));  
+    points = points.concat(cornerGen(radius, rotPos, radWidth, rotWidth / 2, true));
+    points = points.concat(cornerGen(radius, rotPos + rotWidth / 2, radWidth, rotWidth / 2, false));  
   }
 
   //return the drawing function

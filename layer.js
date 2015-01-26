@@ -33,7 +33,7 @@ function layer(center, radius, radWidth, breaks, gapSize, arcGen){
 
   var lastSpot = (Math.PI * 2 - breaks[breaks.length - 1]) + breaks[0];
   var startAt = breaks[breaks.length-1] + gap * .5;
-  arcs.push(arcGen(center, radius, startAt, radWidth, lastSpot - gap));
+  arcs.push(arcGen(center, radius, startAt, radWidth, lastSpot - gap, 4));
 
   return arcs;
 
