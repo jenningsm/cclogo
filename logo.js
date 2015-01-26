@@ -6,6 +6,7 @@ function setup(){
   cvs = createCanvas(spot.offsetWidth, spot.offsetHeight);
   cvs.parent("logo");
   background(255);
+  var center = [cvs.width / 2, cvs.height / 2];
 
   var arcs = []
 
@@ -15,7 +16,7 @@ function setup(){
 
   fill(Math.random() * 255, Math.random() * 255, Math.random() * 255, 128);
   noStroke();
-  ellipse(cvs.width / 2, cvs.height / 2, circRad * 2, circRad * 2);
+  ellipse(center[0], center[1], circRad * 2, circRad * 2);
 
   var numLayers = Math.ceil((dim * .32 - circRad) / (spacing + aRadWidth));
 
@@ -26,9 +27,12 @@ function setup(){
     for(var j = 0; j < Math.ceil(radius / 5); j++){
       breaks[j] = Math.random() * Math.PI * 2;
     }
-    arcs = arcs.concat(layer([cvs.width / 2, cvs.height / 2], radius, aRadWidth, breaks, 12.5, myArc));
+    arcs = arcs.concat(layer(center, radius, aRadWidth, breaks, 12.5, myArc));
 
-    
+    for(var j = 0; j < breaks.length; j++){
+      lineout(center, radius, aRadWidth, 3, breaks[j])([0, 0, 0, 100]);
+    }
+
   }
 
   for(var i = 0; i < arcs.length; i++){
