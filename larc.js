@@ -2,11 +2,11 @@
 var bodyGen = arcBody();
 var cornerGen = corners();
 
-function myArc(center, radius, rotPos, radWidth, rotWidth){
+function myArc(center, radius, rotPos, radWidth, rotWidth, round){
 
   var points = [];
 
-  var rounding = 4 / radius;
+  var rounding = round / radius;
 
   if(rounding * radius > radWidth / 2){
     rounding = radWidth / (2 * radius);

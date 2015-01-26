@@ -1,17 +1,11 @@
 
 var radialGap = .01;
-var angularGap = 12.5;
 
+function layer(center, radius, radWidth, breaks, gapSize, arcGen){
 
-function layer(center, radius, radWidth, numBreaks, arcGen){
-
-  var breaks = [];
-  for(var i = 0; i < numBreaks; i++){
-    breaks[i] = Math.random() * Math.PI * 2;
-  }
   breaks.sort();
 
-  var gap = angularGap / radius;
+  var gap = gapSize / radius;
 
   var settled = false;
   while(!settled) {
@@ -34,7 +28,7 @@ function layer(center, radius, radWidth, numBreaks, arcGen){
   for(var i = 0; i < breaks.length - 1; i++){
     var startAt = breaks[i] + gap * .5;
     var rotWidth = (breaks[i+1] - breaks[i]) - gap;
-    arcs.push(arcGen(center, radius, startAt, radWidth, rotWidth));
+    arcs.push(arcGen(center, radius, startAt, radWidth, rotWidth, 4));
   }
 
   var lastSpot = (Math.PI * 2 - breaks[breaks.length - 1]) + breaks[0];
