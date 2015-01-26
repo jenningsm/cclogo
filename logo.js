@@ -13,10 +13,12 @@ function setup(){
   var circRad = 45;
   var spacing = 10;
   var aRadWidth = 20;
+  var lineWidth = 3;
 
   fill(Math.random() * 255, Math.random() * 255, Math.random() * 255, 128);
   noStroke();
   ellipse(center[0], center[1], circRad * 2, circRad * 2);
+  myArc(center, circRad + spacing * .5, 0, lineWidth, 2 * Math.PI, 0)([0, 0, 0, 100]);
 
   var numLayers = Math.ceil((dim * .32 - circRad) / (spacing + aRadWidth));
 
@@ -30,8 +32,9 @@ function setup(){
     arcs = arcs.concat(layer(center, radius, aRadWidth, breaks, 12.5, myArc));
 
     for(var j = 0; j < breaks.length; j++){
-      lineout(center, radius, aRadWidth, 3, breaks[j])([0, 0, 0, 100]);
+      lineout(center, radius, aRadWidth + spacing - lineWidth, lineWidth, breaks[j])([0, 0, 0, 100]);
     }
+    myArc(center, radius + (aRadWidth + spacing) * .5, 0, lineWidth, 2 * Math.PI, 0)([0, 0, 0, 100]);
 
   }
 
