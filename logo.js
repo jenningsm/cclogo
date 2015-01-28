@@ -22,6 +22,7 @@ function setup(){
 
   var numLayers = Math.ceil((dim * .32 - circRad) / (spacing + aRadWidth));
 
+  var areas;
   for(var i = 0; i < numLayers; i++){
     var radius = circRad + aRadWidth * .5 + spacing + (aRadWidth + spacing) * i;
 
@@ -31,10 +32,12 @@ function setup(){
     }
     arcs = arcs.concat(layer(center, radius, aRadWidth, breaks, 12.5, myArc));
 
-    for(var j = 0; j < breaks.length; j++){
+/*    for(var j = 0; j < breaks.length; j++){
       lineout(center, radius, aRadWidth + spacing - lineWidth, lineWidth, breaks[j])([0, 0, 0, 100]);
     }
     myArc(center, radius + (aRadWidth + spacing) * .5, 0, lineWidth, 2 * Math.PI, 0)([0, 0, 0, 100]);
+*/
+    areas = scaffold(center, radius, aRadWidth + spacing, lineWidth, (i === 0 ? [[0, 2 * Math.PI]] : areas), breaks);
 
   }
 
