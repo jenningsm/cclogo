@@ -22,14 +22,14 @@ function getColor(){
   var rand = Math.random();
   var variance = 0;
 
-  var options = gy;
+  var options = greenblues;
 
   for(var i = 0; i < options.length; i++){
     if(rand < (i+1) / options.length){
       var r = (Math.random() - .5) * variance + options[i][0];
       var g = (Math.random() - .5) * variance + options[i][1];
       var b = (Math.random() - .5) * variance + options[i][2];
-      return [r,g,b,255];
+      return [r,g,b,180];
     }
   }
 }

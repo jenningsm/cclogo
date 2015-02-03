@@ -1,6 +1,5 @@
 
 //var scafcolor = [240, 240, 200, 255];
-var scafcolor = [180, 180, 180, 255];
 //var scafcolor = [160, 160, 160, 200];
 
 /*
@@ -68,11 +67,16 @@ function scaffold(center, radius, radWidth, lineWidth, spots, targets){
     coverage = insertField(coverage, [start, end]);
   }
 
-  //add some coverage to each spot so that those that didn't grow to a target aren't completely without coverage
-  var growMin = .03;
-  var growBreadth = .2;
+  //add some coverage to each growth spot and each target
+  //this makes it so spots that didn't grow aren't naked
+  // and spots that did grow have natural, random endpoints
+  var growMin = 7 / radius;
+  var growBreadth = 20 / radius;
   for(var i = 0; i < spots.length; i++){
     coverage = insertField(coverage, [spots[i] - (growMin + Math.random() * growBreadth), spots[i] + growMin + Math.random() * growBreadth]);
+  }
+  for(var i = 0; i < targets.length; i++){
+    coverage = insertField(coverage, [targets[i] - (growMin + Math.random() * growBreadth), targets[i] + growMin + Math.random() * growBreadth]);
   }
 
   //the array to be filled with painters and returned
@@ -103,9 +107,9 @@ function scaffold(center, radius, radWidth, lineWidth, spots, targets){
 */
 function pickGrowth(spt, d){
   if(Math.random() > d[0] / (d[0] + d[1])){
-    return [spt - d[0] - .1, spt + .1];
+    return [spt - d[0], spt];
   } else {
-    return [spt - .1, spt + d[1] + .1];
+    return [spt, spt + d[1]];
   }
 }
 

@@ -1,4 +1,5 @@
 
+//how much the corners of the arcs will be rounded, in pixels
 var layerrnd = 2.65;
 
 /*

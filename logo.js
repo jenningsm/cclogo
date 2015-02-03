@@ -10,6 +10,8 @@ function setup(){
 
   var arcs = []
 
+  var scafcolor = [180, 180, 180, 255];
+
   var scale = 1.5;
   var circRad = 45 * scale;
   var spacing = 11 * scale;
@@ -35,7 +37,7 @@ function setup(){
     var numbreaks = Math.floor((i+2) * (1.5 + Math.random() * .7));
     var offset = 2 * Math.PI * Math.random();
     for(var j = 0; j < numbreaks; j++){
-      var br = offset + j * (Math.PI * 2 / numbreaks) + (Math.random() - .5) * 3 / numbreaks;
+      var br = offset + j * (Math.PI * 2 / numbreaks) + (Math.random() - .5) * .5;
       br = (br + Math.PI * 4) % (Math.PI * 2);
       nextbreak.push(br);
     }    
