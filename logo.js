@@ -12,13 +12,14 @@ function setup(){
 
   var scafcolor = [180, 180, 180, 180];
 
-  var scale = 1.5;
+  var scale = .75;
   var circRad = 45 * scale;
   var spacing = 11 * scale;
-  var gapsize = 12.5;
+  var gapsize = 8.5 * scale;
   var aRadWidth = 25 * scale;
   var lineWidth = 2.5 * scale;
   var numLayers = 3;
+  var round = 1.5;
 
   var cl = getColor();
   fill(cl[0], cl[1], cl[2], cl[3]);
@@ -26,7 +27,7 @@ function setup(){
   var insideRad = aRadWidth * 1.25;
   myArc(center, circRad - insideRad / 2, 0, insideRad, 2 * Math.PI, 0)(getColor());
   myArc(center, circRad + spacing * .5, 0, lineWidth, 2 * Math.PI, 0)(scafcolor);
-  myArc(center, circRad - (insideRad + spacing * .5), 0, lineWidth, 2 * Math.PI, 0)(scafcolor);
+  myArc(center, circRad - (insideRad + spacing * .42), 0, lineWidth, 2 * Math.PI, 0)(scafcolor);
 
   var radius = circRad + aRadWidth * .5 + spacing;
   var breaks = [];
@@ -50,7 +51,7 @@ function setup(){
   radius = circRad + aRadWidth * .5 + spacing;
   for(var i = 0; i < numLayers; i++){
 
-    arcs = arcs.concat(layer(center, radius, aRadWidth, breaks[i], gapsize, myArc));
+    arcs = arcs.concat(layer(center, radius, aRadWidth, breaks[i], gapsize, myArc, round));
     var b = i+1 === breaks.length ? [] : breaks[i+1];
     scaf = scaf.concat(scaffold(center, radius, aRadWidth + spacing, lineWidth, breaks[i], b));
 

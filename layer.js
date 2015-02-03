@@ -1,6 +1,4 @@
 
-//how much the corners of the arcs will be rounded, in pixels
-var layerrnd = 2.65;
 
 /*
    creates a layer of core arcs
@@ -11,9 +9,10 @@ var layerrnd = 2.65;
    breaks: the points (in radians) at which there should be a gap in the layer
    gapSize: the width of those gaps, in pixels
    arcGen: the function to use to generate arcs
+   layerrnd: the amount to round the corners, in pixels
 
 */
-function layer(center, radius, radWidth, breaks, gapSize, arcGen){
+function layer(center, radius, radWidth, breaks, gapSize, arcGen, layerrnd){
 
   breaks.sort();
 

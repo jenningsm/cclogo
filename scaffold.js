@@ -52,6 +52,20 @@ function scaffold(center, radius, radWidth, lineWidth, spots, targets){
   }
 
 
+
+  //add some coverage to each growth spot and each target
+  //this makes it so spots that didn't grow aren't naked
+  // and spots that did grow have natural, random endpoints
+  var growMin = 7 / radius;
+  var growBreadth = 20 / radius;
+  for(var i = 0; i < spots.length; i++){
+    coverage = insertField(coverage, [spots[i] - (growMin + Math.random() * growBreadth), spots[i] + growMin + Math.random() * growBreadth]);
+  }
+  for(var i = 0; i < targets.length; i++){
+    coverage = insertField(coverage, [targets[i] - (growMin + Math.random() * growBreadth), targets[i] + growMin + Math.random() * growBreadth]);
+  }
+
+
   //if coverage extends past PI * 2, wrap it around
   if(coverage.length > 0 && coverage[coverage.length-1][1] > Math.PI * 2){
     start = 0;
@@ -67,17 +81,6 @@ function scaffold(center, radius, radWidth, lineWidth, spots, targets){
     coverage = insertField(coverage, [start, end]);
   }
 
-  //add some coverage to each growth spot and each target
-  //this makes it so spots that didn't grow aren't naked
-  // and spots that did grow have natural, random endpoints
-  var growMin = 7 / radius;
-  var growBreadth = 20 / radius;
-  for(var i = 0; i < spots.length; i++){
-    coverage = insertField(coverage, [spots[i] - (growMin + Math.random() * growBreadth), spots[i] + growMin + Math.random() * growBreadth]);
-  }
-  for(var i = 0; i < targets.length; i++){
-    coverage = insertField(coverage, [targets[i] - (growMin + Math.random() * growBreadth), targets[i] + growMin + Math.random() * growBreadth]);
-  }
 
   //the array to be filled with painters and returned
   var ret = [];
