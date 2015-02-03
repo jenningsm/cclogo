@@ -1,5 +1,5 @@
 
-var radialGap = .01;
+var layerrnd = 2.65;
 
 function layer(center, radius, radWidth, breaks, gapSize, arcGen){
 
@@ -28,12 +28,12 @@ function layer(center, radius, radWidth, breaks, gapSize, arcGen){
   for(var i = 0; i < breaks.length - 1; i++){
     var startAt = breaks[i] + gap * .5;
     var rotWidth = (breaks[i+1] - breaks[i]) - gap;
-    arcs.push(arcGen(center, radius, startAt, radWidth, rotWidth, 4));
+    arcs.push(arcGen(center, radius, startAt, radWidth, rotWidth, layerrnd));
   }
 
   var lastSpot = (Math.PI * 2 - breaks[breaks.length - 1]) + breaks[0];
   var startAt = breaks[breaks.length-1] + gap * .5;
-  arcs.push(arcGen(center, radius, startAt, radWidth, lastSpot - gap, 4));
+  arcs.push(arcGen(center, radius, startAt, radWidth, lastSpot - gap, layerrnd));
 
   return arcs;
 

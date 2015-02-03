@@ -10,38 +10,52 @@ function setup(){
 
   var arcs = []
 
-  var circRad = 45;
-  var spacing = 10;
-  var aRadWidth = 20;
-  var lineWidth = 3;
+  var scale = 1.5;
+  var circRad = 45 * scale;
+  var spacing = 11 * scale;
+  var gapsize = 12.5;
+  var aRadWidth = 25 * scale;
+  var lineWidth = 2.5 * scale;
+  var numLayers = 3;
 
-  fill(Math.random() * 255, Math.random() * 255, Math.random() * 255, 128);
+  var cl = getColor();
+  fill(cl[0], cl[1], cl[2], cl[3]);
   noStroke();
-  ellipse(center[0], center[1], circRad * 2, circRad * 2);
-  myArc(center, circRad + spacing * .5, 0, lineWidth, 2 * Math.PI, 0)([0, 0, 0, 100]);
-
-  var numLayers = Math.ceil((dim * .32 - circRad) / (spacing + aRadWidth));
+  var insideRad = aRadWidth * 1.25;
+  myArc(center, circRad - insideRad / 2, 0, insideRad, 2 * Math.PI, 0)(getColor());
+  myArc(center, circRad + spacing * .5, 0, lineWidth, 2 * Math.PI, 0)(scafcolor);
+  myArc(center, circRad - (insideRad + spacing * .5), 0, lineWidth, 2 * Math.PI, 0)(scafcolor);
 
   var areas;
+  var radius = circRad + aRadWidth * .5 + spacing;
+  var breaks = [];
+
   for(var i = 0; i < numLayers; i++){
-    var radius = circRad + aRadWidth * .5 + spacing + (aRadWidth + spacing) * i;
+    var nextbreak = [];
 
-    var breaks = [];
-    for(var j = 0; j < Math.ceil(radius / 5); j++){
-      breaks[j] = Math.random() * Math.PI * 2;
-    }
-    arcs = arcs.concat(layer(center, radius, aRadWidth, breaks, 12.5, myArc));
+    var numbreaks = Math.floor((i+2) * (1.5 + Math.random() * .7));
+    var offset = 2 * Math.PI * Math.random();
+    for(var j = 0; j < numbreaks; j++){
+      var br = offset + j * (Math.PI * 2 / numbreaks) + (Math.random() - .5) * 3 / numbreaks;
+      br = (br + Math.PI * 4) % (Math.PI * 2);
+      nextbreak.push(br);
+    }    
 
-/*    for(var j = 0; j < breaks.length; j++){
-      lineout(center, radius, aRadWidth + spacing - lineWidth, lineWidth, breaks[j])([0, 0, 0, 100]);
-    }
-    myArc(center, radius + (aRadWidth + spacing) * .5, 0, lineWidth, 2 * Math.PI, 0)([0, 0, 0, 100]);
-*/
-    areas = scaffold(center, radius, aRadWidth + spacing, lineWidth, (i === 0 ? [[0, 2 * Math.PI]] : areas), breaks);
+    breaks.push(nextbreak);
+    radius += aRadWidth + spacing;
+  }
 
+  radius = circRad + aRadWidth * .5 + spacing;
+  for(var i = 0; i < numLayers; i++){
+
+    arcs = arcs.concat(layer(center, radius, aRadWidth, breaks[i], gapsize, myArc));
+    var b = i+1 === breaks.length ? [] : breaks[i+1];
+    areas = scaffold(center, radius, aRadWidth + spacing, lineWidth, (i === 0 ? [[0, 2 * Math.PI]] : areas), breaks[i], b);
+
+    radius += aRadWidth + spacing;
   }
 
   for(var i = 0; i < arcs.length; i++){
-    arcs[i]([Math.random() * 255, Math.random() * 255, Math.random() * 255, 200]);
+    arcs[i](getColor());
   }
 }
