@@ -18,18 +18,24 @@ var grey = [[160, 160, 160]];
 var gy = [[225, 215, 170]];
 var black = [[0, 0, 0]];
 
+
+var last = 0;
 function getColor(){
   var rand = Math.random();
   var variance = 0;
 
   var options = greenblues;
 
-  for(var i = 0; i < options.length; i++){
-    if(rand < (i+1) / options.length){
-      var r = (Math.random() - .5) * variance + options[i][0];
-      var g = (Math.random() - .5) * variance + options[i][1];
-      var b = (Math.random() - .5) * variance + options[i][2];
-      return [r,g,b,180];
+  for(var i = 0, j = 0; i < options.length; i++){
+   if(i != last){
+      if(rand < (j+1) / (options.length -1)){
+        var r = (Math.random() - .5) * variance + options[i][0];
+        var g = (Math.random() - .5) * variance + options[i][1];
+        var b = (Math.random() - .5) * variance + options[i][2];
+        last = i;
+        return [r,g,b,180];
+      }
+      j++;
     }
   }
 }

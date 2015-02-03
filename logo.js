@@ -10,7 +10,7 @@ function setup(){
 
   var arcs = []
 
-  var scafcolor = [180, 180, 180, 255];
+  var scafcolor = [180, 180, 180, 180];
 
   var scale = 1.5;
   var circRad = 45 * scale;
