@@ -50,7 +50,7 @@ function setup(){
 
     arcs = arcs.concat(layer(center, radius, aRadWidth, breaks[i], gapsize, myArc));
     var b = i+1 === breaks.length ? [] : breaks[i+1];
-    areas = scaffold(center, radius, aRadWidth + spacing, lineWidth, (i === 0 ? [[0, 2 * Math.PI]] : areas), breaks[i], b);
+    areas = scaffold(center, radius, aRadWidth + spacing, lineWidth, breaks[i], b);
 
     radius += aRadWidth + spacing;
   }

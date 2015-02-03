@@ -1,115 +1,116 @@
 
 var scafcolor = gs(180);
-var scafcolor = [240, 240, 200, 255];
+//var scafcolor = [240, 240, 200, 255];
+var scafcolor = [180, 180, 180, 255];
 //var scafcolor = [160, 160, 160, 200];
 
-function scaffold(center, radius, radWidth, lineWidth, areas, spots, targets){
+/*
+   SCAFFOLD: creates the thin 'scaffolding' lines that run between
+   the larger arcs. The function called once for each layer. It returns
+   an array of painters for the radial lines and the outer angular lines.
 
-  var seeds = [];
-  var grew = []
-  for(var i = 0, aTracker = 0; i < spots.length; i++){
-    while(aTracker < areas.length && areas[aTracker][1] < spots[i]){
-      aTracker++;
-    }
-    if(aTracker !== areas.length && areas[aTracker][0] < spots[i]){
-      seeds.push(spots[i]);
-      grew.push(false);
-    }
-  }
+   center: [x,y] coordinate around which scaffold is centered
+   radius: the radius at the halfway point (radially) of the layer
+   radWidth: the radial width of the layer
+   linesWidth: the width the scaffolding lines are to be made
+   spots: where in this layer, the larger arcs break. the scaffolding must run
+          throught these points.
+   targets: the points in the next layer at which the larger arcs break. angular arcs
+            must be laid such that there is scaffolding at the base of each these points.
+            If this is an empty array, then the whole outer layer should be scaffolded.
+*/
+function scaffold(center, radius, radWidth, lineWidth, spots, targets){
 
   targets.sort();
-  var nwareas = [];
+
+  //coverage represents the portion of the outer layer that is currently
+  //  covered by scaffolding as an array of start-end pairs
+  var coverage = [];
+
   if(targets.length === 0){
-    nwareas = insertField(nwareas, [0, Math.PI * 2]);
+    coverage = insertField(coverage, [0, Math.PI * 2]);
   }
+
+  /* create the coverage */
 
   var j = 0;
-  for(; targets[j] < seeds[0]; j++){
-    var s;
-    var e;
-    var dists = [Math.PI * 2 - Math.abs(seeds[seeds.length - 1] - targets[j]), Math.abs(seeds[0] - targets[j])];
-    if(Math.random() > dists[0] / (dists[0] + dists[1])){
-      s = seeds[seeds.length-1] - .1;
-      e = targets[j] + .1;
-      grew[seeds.length-1] = true;
-    } else {
-      s = targets[j] - .1;
-      e = seeds[0] + .1;
-      grew[0] = true;
-    }
-    nwareas = insertField(nwareas, [s, e]);
+  //all targets between 0 radians and the spot with the smallest position (in radians)
+  for(; targets[j] < spots[0]; j++){
+    var dists = [Math.PI * 2 - Math.abs(spots[spots.length - 1] - targets[j]), Math.abs(spots[0] - targets[j])];
+    coverage = insertField(coverage, pickGrowth(targets[j], dists));
   }
   var i = 0;
-  for(; i < seeds.length - 1; i++){
-    while(targets[j] < seeds[i]){
-      j++;
-    }
-    for(; targets[j] < seeds[i+1]; j++){
-      var s;
-      var e;
-      var dists = [Math.abs(seeds[i] - targets[j]), Math.abs(seeds[i+1] - targets[j])];
-      if(Math.random() > dists[0] / (dists[0] + dists[1])){
-        s = seeds[i] - .1;
-        e = targets[j] + .1;
-        grew[i] = true;
-      } else {
-        s = targets[j] - .1;
-        e = seeds[i+1] + .1;
-        grew[i+1] = true;
-      }
-      nwareas = insertField(nwareas, [s, e]);
+  //all targets between the smallest spot and largets spot
+  for(; i < spots.length - 1; i++){
+    for(; targets[j] < spots[i+1]; j++){
+      var dists = [Math.abs(spots[i] - targets[j]), Math.abs(spots[i+1] - targets[j])];
+      coverage = insertField(coverage, pickGrowth(targets[j], dists));
     }
   }
-
+  //all targets between the largets spot and 2 * PI radians
   for(; j < targets.length; j++){
-    var s;
-    var e;
-    var dists = [Math.abs(seeds[seeds.length - 1] - targets[j]), Math.PI * 2 - Math.abs(seeds[0] - targets[j])];
-    if(Math.random() > dists[0] / (dists[0] + dists[1])){
-      s = seeds[seeds.length-1] - .1;
-      e = targets[j] + .1;
-      grew[seeds.length-1] = true;
-    } else {
-      s = targets[j] - .1;
-      e = seeds[0] + .1;
-      grew[0] = true;
-    }
-    nwareas = insertField(nwareas, [s, e]);
+    var dists = [Math.abs(spots[spots.length - 1] - targets[j]), Math.PI * 2 - Math.abs(spots[0] - targets[j])];
+    coverage = insertField(coverage, pickGrowth(targets[j], dists));
   }
 
-  for(var i = 0; i < seeds.length; i++){
-    if(!grew[i]){
-      nwareas = insertField(nwareas, [seeds[i] - (.03 + Math.random() * .2), seeds[i] + .03 + Math.random() * .2]);
-    }
-  }
 
-  if(nwareas.length > 0 && nwareas[nwareas.length-1][1] > Math.PI * 2){
+  //if coverage extends past PI * 2, wrap it around
+  if(coverage.length > 0 && coverage[coverage.length-1][1] > Math.PI * 2){
     start = 0;
-    end = nwareas[nwareas.length-1][1] - Math.PI * 2;
-
-    nwareas[nwareas.length-1][1] = Math.PI * 2;    
-
-    nwareas = insertField(nwareas, [start, end]);
+    end = coverage[coverage.length-1][1] - Math.PI * 2;
+    coverage[coverage.length-1][1] = Math.PI * 2;    
+    coverage = insertField(coverage, [start, end]);
   }
-  if(nwareas.length > 0 && nwareas[0][0] < 0){
-    start = nwareas[0][0] + Math.PI * 2;
+  //if coverage extends below 0, wrap it around
+  if(coverage.length > 0 && coverage[0][0] < 0){
+    start = coverage[0][0] + Math.PI * 2;
     end = Math.PI * 2;
-
-    nwareas[0][0] = 0;
-
-    nwareas = insertField(nwareas, [start, end]);
+    coverage[0][0] = 0;
+    coverage = insertField(coverage, [start, end]);
   }
 
-  for(var i = 0; i < seeds.length; i++){
-    lineout(center, radius, radWidth - lineWidth, lineWidth, seeds[i])(scafcolor);
-  }
-  for(var i = 0; i < nwareas.length; i++){
-    myArc(center, radius + radWidth * .5, nwareas[i][0], lineWidth, nwareas[i][1] - nwareas[i][0], 1)(scafcolor);
+  //add some coverage to each spot so that those that didn't grow to a target aren't completely without coverage
+  var growMin = .03;
+  var growBreadth = .2;
+  for(var i = 0; i < spots.length; i++){
+    coverage = insertField(coverage, [spots[i] - (growMin + Math.random() * growBreadth), spots[i] + growMin + Math.random() * growBreadth]);
   }
 
-  return nwareas;
+  //add the radial lines
+  for(var i = 0; i < spots.length; i++){
+    lineout(center, radius, radWidth - lineWidth, lineWidth, spots[i])(scafcolor);
+  }
+  //add the coverage
+  for(var i = 0; i < coverage.length; i++){
+    myArc(center, radius + radWidth * .5, coverage[i][0], lineWidth, coverage[i][1] - coverage[i][0], 1)(scafcolor);
+  }
+
+  return coverage;
 }
 
+/*
+  returns coverage given a growth spot and the distance to
+    the two nearest targets.
+
+  spt: the growth spot
+  d: a two member array contained the two distances
+*/
+function pickGrowth(spt, d){
+  if(Math.random() > d[0] / (d[0] + d[1])){
+    return [spt - d[0] - .1, spt + .1];
+  } else {
+    return [spt - .1, spt + d[1] + .1];
+  }
+}
+
+/*
+  arr is an array of two member arrays, each representing a start and end
+  field is a two member array, representing a start and end
+
+  insertField() returns arr with field inserted into it.
+  if field overlaps with any of arr's existing elements, then those
+  start-end pairs are combined into one start-end pair.
+*/
 function insertField(arr, field){
 
   var start = field[0];
