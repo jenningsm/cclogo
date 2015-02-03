@@ -1,7 +1,14 @@
 
+/*
+  each of these function returns a function that returns a painter for the corresponding part
+*/
+
+//the angular resolution at which points are added to the components
 var angRes = .03;
+//the angular resolution around the corners
 var roundRes = .001;
 
+//the main body of the arc
 function arcBody(){
   var points = [];
 
@@ -39,6 +46,7 @@ function arcBody(){
   }
 }
 
+//the ends of the arc, with rounded corners
 function corners(){
 
   var roundedCorner = [];

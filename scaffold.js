@@ -1,5 +1,4 @@
 
-var scafcolor = gs(180);
 //var scafcolor = [240, 240, 200, 255];
 var scafcolor = [180, 180, 180, 255];
 //var scafcolor = [160, 160, 160, 200];
@@ -76,17 +75,24 @@ function scaffold(center, radius, radWidth, lineWidth, spots, targets){
     coverage = insertField(coverage, [spots[i] - (growMin + Math.random() * growBreadth), spots[i] + growMin + Math.random() * growBreadth]);
   }
 
+  //the array to be filled with painters and returned
+  var ret = [];
+
   //add the radial lines
   for(var i = 0; i < spots.length; i++){
-    lineout(center, radius, radWidth - lineWidth, lineWidth, spots[i])(scafcolor);
+    ret.push(lineout(center, radius, radWidth - lineWidth, lineWidth, spots[i]));
   }
   //add the coverage
   for(var i = 0; i < coverage.length; i++){
-    myArc(center, radius + radWidth * .5, coverage[i][0], lineWidth, coverage[i][1] - coverage[i][0], 1)(scafcolor);
+    ret.push(myArc(center, radius + radWidth * .5, coverage[i][0], lineWidth, coverage[i][1] - coverage[i][0], 1));
   }
 
-  return coverage;
+  return ret;
 }
+
+
+
+/* HELPER FUNCTIONS */
 
 /*
   returns coverage given a growth spot and the distance to

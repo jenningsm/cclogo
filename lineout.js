@@ -1,5 +1,13 @@
+/*
+   creates a line that goes out radially, for the scaffolding
 
-function lineout(center, radius, height, width, rotPos){
+   center: center from which it radiates
+   radius: radius at its midpoint
+   radWidth: the radial width of the line
+   width: the angular width of the line, in pixels
+   rotPos: the angle of the line
+*/
+function lineout(center, radius, radWidth, width, rotPos){
   var unitvec = [Math.cos(rotPos), Math.sin(rotPos)];
   var perp = [-unitvec[1], unitvec[0]];
   
@@ -8,7 +16,7 @@ function lineout(center, radius, height, width, rotPos){
     var xcen = center[0] + radius * unitvec[0];
     var ycen = center[1] + radius * unitvec[1];
   
-    var radDiff = [.5 * height * unitvec[0], .5 * height * unitvec[1]];
+    var radDiff = [.5 * radWidth * unitvec[0], .5 * radWidth * unitvec[1]];
     var angDiff = [.5 * width * perp[0], .5 * width * perp[1]];
 
     beginShape();

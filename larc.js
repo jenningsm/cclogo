@@ -12,16 +12,18 @@ function myArc(center, radius, rotPos, radWidth, rotWidth, round){
     rounding = radWidth / (2 * radius);
   }
 
+  //if there's room for a body
   if(rotWidth > 2 * rounding){
     points = points.concat(cornerGen(radius, rotPos, radWidth, rounding, true));
     points = points.concat(bodyGen(radius, rotPos + rounding, radWidth, rotWidth - 2 * rounding));
     points = points.concat(cornerGen(radius, rotPos + rotWidth - rounding, radWidth, rounding, false));  
   } else {
+    //else, don't include a body, only the ends (corners)
     points = points.concat(cornerGen(radius, rotPos, radWidth, rotWidth / 2, true));
     points = points.concat(cornerGen(radius, rotPos + rotWidth / 2, radWidth, rotWidth / 2, false));  
   }
 
-  //return the drawing function
+  //return the painter
   return function(color){
     noStroke();
     fill(color[0], color[1], color[2], color[3]);
