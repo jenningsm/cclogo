@@ -13,18 +13,18 @@ function setup(){
   var scafcolor = [202, 202, 202, 255];
 
   var scale = 1;
-  var circRad = 45 * scale;
   var spacing = 12.5 * Math.sqrt(scale);
   var gapsize = spacing * .9;
   var aRadWidth = 25 * scale;
   var lineWidth = spacing * .25;
   var numLayers = 3;
   var round = 1.5;
+  var circRad = 40 * scale;
 
   var cl = getColor();
   fill(cl[0], cl[1], cl[2], cl[3]);
   noStroke();
-  var insideRad = aRadWidth * 1.25;
+  var insideRad = aRadWidth * 1;
   myArc(center, circRad - insideRad / 2, 0, insideRad, 2 * Math.PI, 0)(getColor());
   myArc(center, circRad + spacing * .5, 0, lineWidth, 2 * Math.PI, 0)(scafcolor);
   myArc(center, circRad - (insideRad + spacing * .42), 0, lineWidth, 2 * Math.PI, 0)(scafcolor);
