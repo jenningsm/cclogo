@@ -40,7 +40,11 @@ function getColor(){
         var g = (Math.random() - .5) * variance + options[i][1];
         var b = (Math.random() - .5) * variance + options[i][2];
         last = i;
-        return [r,g,b,180];
+        var mult = 1 - 180 / 255;
+        r = r + mult * (255 - r);
+        g = g + mult * (255 - g);
+        b = b + mult * (255 - b);
+        return [r,g,b,255];
       }
       j++;
     }
