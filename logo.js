@@ -27,7 +27,7 @@ function setup(){
   var insideRad = aRadWidth * 1;
   myArc(center, circRad - insideRad / 2, 0, insideRad, 2 * Math.PI, 0)(getColor());
   myArc(center, circRad + spacing * .5, 0, lineWidth, 2 * Math.PI, 0)(scafcolor);
-  myArc(center, circRad - (insideRad + spacing * .42), 0, lineWidth, 2 * Math.PI, 0)(scafcolor);
+  myArc(center, circRad - (insideRad + spacing * .25 + aRadWidth * .08), 0, lineWidth, 2 * Math.PI, 0)(scafcolor);
 
   var radius = circRad + aRadWidth * .5 + spacing;
   var breaks = [];
