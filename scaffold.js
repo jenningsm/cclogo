@@ -25,66 +25,26 @@ function scaffold(center, radius, radWidth, lineWidth, spots, targets){
   //  covered by scaffolding as an array of start-end pairs
   var coverage = [];
 
-  if(targets.length === 0){
+  if(targets.length === 0){//if this is the outermost layer, cover whole area
     coverage = insertField(coverage, [0, Math.PI * 2]);
+  } else {//else, create coverage
+    coverage = connectBreaks(spots, targets);
   }
-
-  /* create the coverage */
-
-  var j = 0;
-  //all targets between 0 radians and the spot with the smallest position (in radians)
-  for(; targets[j] < spots[0]; j++){
-    var dists = [Math.PI * 2 - Math.abs(spots[spots.length - 1] - targets[j]), Math.abs(spots[0] - targets[j])];
-    coverage = insertField(coverage, pickGrowth(targets[j], dists));
-  }
-  var i = 0;
-  //all targets between the smallest spot and largets spot
-  for(; i < spots.length - 1; i++){
-    for(; targets[j] < spots[i+1]; j++){
-      var dists = [Math.abs(spots[i] - targets[j]), Math.abs(spots[i+1] - targets[j])];
-      coverage = insertField(coverage, pickGrowth(targets[j], dists));
-    }
-  }
-  //all targets between the largets spot and 2 * PI radians
-  for(; j < targets.length; j++){
-    var dists = [Math.abs(spots[spots.length - 1] - targets[j]), Math.PI * 2 - Math.abs(spots[0] - targets[j])];
-    coverage = insertField(coverage, pickGrowth(targets[j], dists));
-  }
-
-
 
   //add some coverage to each growth spot and each target
   //this makes it so spots that didn't grow aren't naked
   // and spots that did grow have natural, random endpoints
-  var growMin = .03;
-  var growBreadth = 0.12;
   for(var i = 0; i < spots.length; i++){
-    var growShift = Math.random();
-    coverage = insertField(coverage, [spots[i] - (growMin + growShift * growBreadth), spots[i] + growMin + (1 - growShift) * growBreadth]);
+    coverage = insertField(coverage, leafCoverage(spots[i]));
   }
   for(var i = 0; i < targets.length; i++){
-    var growShift = Math.random();
-    coverage = insertField(coverage, [targets[i] - (growMin + growShift * growBreadth), targets[i] + growMin + (1 - growShift) * growBreadth]);
+    coverage = insertField(coverage, leafCoverage(targets[i]));
   }
 
+  //wrap coverage around if it extends past 2 * PI or below 0
+  coverage = wrapCoverage(coverage);
 
-  //if coverage extends past PI * 2, wrap it around
-  if(coverage.length > 0 && coverage[coverage.length-1][1] > Math.PI * 2){
-    start = 0;
-    end = coverage[coverage.length-1][1] - Math.PI * 2;
-    coverage[coverage.length-1][1] = Math.PI * 2;    
-    coverage = insertField(coverage, [start, end]);
-  }
-  //if coverage extends below 0, wrap it around
-  if(coverage.length > 0 && coverage[0][0] < 0){
-    start = coverage[0][0] + Math.PI * 2;
-    end = Math.PI * 2;
-    coverage[0][0] = 0;
-    coverage = insertField(coverage, [start, end]);
-  }
-
-
-  //the array to be filled with painters and returned
+  //painters to be returned
   var ret = [];
 
   //add the radial lines
@@ -104,19 +64,35 @@ function scaffold(center, radius, radWidth, lineWidth, spots, targets){
 /* HELPER FUNCTIONS */
 
 /*
-  returns coverage given a growth spot and the distance to
-    the two nearest targets.
+  Creates the coverage connecting breaks.
 
-  spt: the growth spot
-  d: a two member array contained the two distances
+  spots: the breaks of the current layer
+  targets: the breaks of the next layer
+ 
+  returns the coverage
 */
-function pickGrowth(spt, d){
-  var extra = .05 + Math.random() * .2;
-  if(Math.random() > d[0] / (d[0] + d[1])){
-    return [spt - d[0] * (1 + extra) , spt + d[0] * extra];
-  } else {
-    return [spt - d[1] * extra, spt + d[1] * (1 + extra)];
+function connectBreaks(spots, targets){
+  var coverage = [];
+  var j = 0;
+  //all targets between 0 radians and the spot with the smallest position (in radians)
+  for(; targets[j] < spots[0]; j++){
+    var dists = [Math.PI * 2 - Math.abs(spots[spots.length - 1] - targets[j]), Math.abs(spots[0] - targets[j])];
+    coverage = insertField(coverage, pickGrowth(targets[j], dists));
   }
+  var i = 0;
+  //all targets between the smallest spot and largets spot
+  for(; i < spots.length - 1; i++){
+    for(; targets[j] < spots[i+1]; j++){
+      var dists = [Math.abs(spots[i] - targets[j]), Math.abs(spots[i+1] - targets[j])];
+      coverage = insertField(coverage, pickGrowth(targets[j], dists));
+    }
+  }
+  //all targets between the largets spot and 2 * PI radians
+  for(; j < targets.length; j++){
+    var dists = [Math.abs(spots[spots.length - 1] - targets[j]), Math.PI * 2 - Math.abs(spots[0] - targets[j])];
+    coverage = insertField(coverage, pickGrowth(targets[j], dists));
+  }
+  return coverage;
 }
 
 /*
@@ -153,3 +129,55 @@ function insertField(arr, field){
 
   return arr;
 }
+
+/*
+  returns coverage given a growth spot and the distance to
+    the two nearest targets.
+
+  spt: the growth spot
+  d: a two member array contained the two distances
+*/
+function pickGrowth(spt, d){
+  var extra = .05 + Math.random() * .2;
+  if(Math.random() > d[0] / (d[0] + d[1])){
+    return [spt - d[0] * (1 + extra) , spt + d[0] * extra];
+  } else {
+    return [spt - d[1] * extra, spt + d[1] * (1 + extra)];
+  }
+}
+
+
+/*
+   Returns coverage for leaf breaks that don't connect to another break
+
+   spot: the location of the leaf break.
+*/
+var growMin = .03;
+var growBreadth = 0.12;
+function leafCoverage(spot){
+  var growShift = Math.random();
+  return [spot - (growMin + growShift * growBreadth), spot + growMin + (1 - growShift) * growBreadth];
+}
+
+/*
+  wraps coverage if it extends beyond 2 * PI or below 0
+*/
+function wrapCoverage(coverage){
+  //if coverage extends past PI * 2, wrap it around
+  if(coverage.length > 0 && coverage[coverage.length-1][1] > Math.PI * 2){
+    start = 0;
+    end = coverage[coverage.length-1][1] - Math.PI * 2;
+    coverage[coverage.length-1][1] = Math.PI * 2;    
+    coverage = insertField(coverage, [start, end]);
+  }
+  //if coverage extends below 0, wrap it around
+  if(coverage.length > 0 && coverage[0][0] < 0){
+    start = coverage[0][0] + Math.PI * 2;
+    end = Math.PI * 2;
+    coverage[0][0] = 0;
+    coverage = insertField(coverage, [start, end]);
+  }
+  return coverage;
+}
+
+

@@ -18,7 +18,7 @@ function setup(){
   var aRadWidth = 25 * scale;
   var lineWidth = spacing * .25;
   var numLayers = 3;
-  var round = 1.5;
+  var round = 2;
   var circRad = 40 * scale;
 
   var cl = getColor();
