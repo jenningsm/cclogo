@@ -56,13 +56,15 @@ function scaffold(center, radius, radWidth, lineWidth, spots, targets){
   //add some coverage to each growth spot and each target
   //this makes it so spots that didn't grow aren't naked
   // and spots that did grow have natural, random endpoints
-  var growMin = 7 / radius;
-  var growBreadth = 20 / radius;
+  var growMin = .03;
+  var growBreadth = 0.12;
   for(var i = 0; i < spots.length; i++){
-    coverage = insertField(coverage, [spots[i] - (growMin + Math.random() * growBreadth), spots[i] + growMin + Math.random() * growBreadth]);
+    var growShift = Math.random();
+    coverage = insertField(coverage, [spots[i] - (growMin + growShift * growBreadth), spots[i] + growMin + (1 - growShift) * growBreadth]);
   }
   for(var i = 0; i < targets.length; i++){
-    coverage = insertField(coverage, [targets[i] - (growMin + Math.random() * growBreadth), targets[i] + growMin + Math.random() * growBreadth]);
+    var growShift = Math.random();
+    coverage = insertField(coverage, [targets[i] - (growMin + growShift * growBreadth), targets[i] + growMin + (1 - growShift) * growBreadth]);
   }
 
 
@@ -109,10 +111,11 @@ function scaffold(center, radius, radWidth, lineWidth, spots, targets){
   d: a two member array contained the two distances
 */
 function pickGrowth(spt, d){
+  var extra = .05 + Math.random() * .2;
   if(Math.random() > d[0] / (d[0] + d[1])){
-    return [spt - d[0], spt];
+    return [spt - d[0] * (1 + extra) , spt + d[0] * extra];
   } else {
-    return [spt, spt + d[1]];
+    return [spt - d[1] * extra, spt + d[1] * (1 + extra)];
   }
 }
 

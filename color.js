@@ -12,19 +12,26 @@ var g4 = [12, 232, 76];
 var g5 = [69, 222, 71];
 var g6 = [222, 222, 37];
 
+var h1 = [26, 202, 222];
+var h2 = [21, 232, 195];
+var h3 = [9, 209, 117];
+var h4 = [21, 232, 75];
+var h5 = [30, 222, 22];
+
 var whats = [myblue, myteal, mytan, mypink, myorg];
 var greenblues = [g1, g2, g3, g4, g5 ];
 var grey = [[160, 160, 160]];
 var gy = [[225, 215, 170]];
 var black = [[0, 0, 0]];
 
+var ngreenblues = [h1, h2, h3, h4, h5];
 
 var last = 0;
 function getColor(){
   var rand = Math.random();
   var variance = 0;
 
-  var options = greenblues;
+  var options = ngreenblues;
 
   for(var i = 0, j = 0; i < options.length; i++){
    if(i != last){

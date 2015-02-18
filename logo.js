@@ -12,12 +12,12 @@ function setup(){
 
   var scafcolor = [180, 180, 180, 180];
 
-  var scale = .75;
+  var scale = 1;
   var circRad = 45 * scale;
-  var spacing = 11 * scale;
-  var gapsize = 8.5 * scale;
+  var spacing = 12.5 * Math.sqrt(scale);
+  var gapsize = spacing * .9;
   var aRadWidth = 25 * scale;
-  var lineWidth = 2.5 * scale;
+  var lineWidth = spacing * .25;
   var numLayers = 3;
   var round = 1.5;
 
@@ -35,10 +35,11 @@ function setup(){
   for(var i = 0; i < numLayers; i++){
     var nextbreak = [];
 
-    var numbreaks = Math.floor((i+2) * (1.5 + Math.random() * .7));
+    var numbreaks = 3 + i * 2;
+
     var offset = 2 * Math.PI * Math.random();
     for(var j = 0; j < numbreaks; j++){
-      var br = offset + j * (Math.PI * 2 / numbreaks) + (Math.random() - .5) * .5;
+      var br = offset + j * (Math.PI * 2 / numbreaks) + (Math.random() - .5) * .5; 
       br = (br + Math.PI * 4) % (Math.PI * 2);
       nextbreak.push(br);
     }    
