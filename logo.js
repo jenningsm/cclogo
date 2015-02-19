@@ -13,10 +13,12 @@ function setup(){
   var scafcolor = [202, 202, 202, 255];
 
   var scale = 1;
-  var spacing = 12.5 * Math.sqrt(scale);
+  var spacing = scale * 5.5 + 7 * Math.sqrt(scale);
+  //var spacing = 12.5 * Math.sqrt(scale);
   var gapsize = spacing * .9;
   var aRadWidth = 25 * scale;
-  var lineWidth = spacing * .25;
+  var lineWidth = sqrt(spacing) * .24 + .17 * spacing;
+  //var lineWidth = spacing * .25;
   var numLayers = 3;
   var round = 2;
   var circRad = 40 * scale;
