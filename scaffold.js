@@ -1,7 +1,4 @@
 
-//var scafcolor = [240, 240, 200, 255];
-//var scafcolor = [160, 160, 160, 200];
-
 /*
    SCAFFOLD: creates the thin 'scaffolding' lines that run between
    the larger arcs. The function called once for each layer. It returns
@@ -72,25 +69,32 @@ function scaffold(center, radius, radWidth, lineWidth, spots, targets){
   returns the coverage
 */
 function connectBreaks(spots, targets){
+
+  /*
+     each of the targets is connected to one of the two spots on either
+     side of it. Which of the two it is connected to is decided randomly
+     but weighted by the distance of each spot from the target.
+  */
+
   var coverage = [];
   var j = 0;
   //all targets between 0 radians and the spot with the smallest position (in radians)
   for(; targets[j] < spots[0]; j++){
     var dists = [Math.PI * 2 - Math.abs(spots[spots.length - 1] - targets[j]), Math.abs(spots[0] - targets[j])];
-    coverage = insertField(coverage, pickGrowth(targets[j], dists));
+    coverage = insertField(coverage, pickSpot(targets[j], dists));
   }
   var i = 0;
   //all targets between the smallest spot and largets spot
   for(; i < spots.length - 1; i++){
     for(; targets[j] < spots[i+1]; j++){
       var dists = [Math.abs(spots[i] - targets[j]), Math.abs(spots[i+1] - targets[j])];
-      coverage = insertField(coverage, pickGrowth(targets[j], dists));
+      coverage = insertField(coverage, pickSpot(targets[j], dists));
     }
   }
   //all targets between the largets spot and 2 * PI radians
   for(; j < targets.length; j++){
     var dists = [Math.abs(spots[spots.length - 1] - targets[j]), Math.PI * 2 - Math.abs(spots[0] - targets[j])];
-    coverage = insertField(coverage, pickGrowth(targets[j], dists));
+    coverage = insertField(coverage, pickSpot(targets[j], dists));
   }
   return coverage;
 }
@@ -131,18 +135,19 @@ function insertField(arr, field){
 }
 
 /*
-  returns coverage given a growth spot and the distance to
-    the two nearest targets.
+  returns coverage given a target and the distances to
+    each of the two nearest spots. randomly selects from
+    the two spots weighted by the distances
 
-  spt: the growth spot
-  d: a two member array contained the two distances
+  target: the target's location
+  d: a two member array containing the two distances
 */
-function pickGrowth(spt, d){
+function pickSpot(target, d){
   var extra = .05 + Math.random() * .2;
   if(Math.random() > d[0] / (d[0] + d[1])){
-    return [spt - d[0] * (1 + extra) , spt + d[0] * extra];
+    return [target - d[0] * (1 + extra) , target + d[0] * extra];
   } else {
-    return [spt - d[1] * extra, spt + d[1] * (1 + extra)];
+    return [target - d[1] * extra, target + d[1] * (1 + extra)];
   }
 }
 
