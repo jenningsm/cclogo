@@ -23,18 +23,36 @@ function myArc(center, radius, rotPos, radWidth, rotWidth, round){
     points = points.concat(cornerGen(radius, rotPos + rotWidth / 2, radWidth, rotWidth / 2, false));  
   }
 
-  //return the painter
-  return function(color){
-    noStroke();
-    fill(color[0], color[1], color[2], color[3]);
-    
-    beginShape();
+  var path = new Path2D();
+
+  if(path){
+    path.moveTo(center[0] + points[0], center[1] + points[1]);
     for(var i = 0; i < points.length; i += 4){
-      vertex(center[0] + points[i], center[1] + points[i+1]);
+      path.lineTo(center[0] + points[i], center[1] + points[i+1]);
     }
     for(var i = points.length - 2; i > 0; i -= 4){
-      vertex(center[0] + points[i], center[1] + points[i+1]);
+      path.lineTo(center[0] + points[i], center[1] + points[i+1]);
     }
-    endShape(CLOSE);
+    path.closePath();
+
+    return function(color){
+      context.fillStyle = cssColor(color);
+      context.fill(path);
+    }
+  } else {
+    return function(color){
+      context.beginPath();
+      context.moveTo(center[0] + points[0], center[1] + points[1]);
+      for(var i = 0; i < points.length; i += 4){
+        context.lineTo(center[0] + points[i], center[1] + points[i+1]);
+      }
+      for(var i = points.length - 2; i > 0; i -= 4){
+        context.lineTo(center[0] + points[i], center[1] + points[i+1]);
+      }
+      context.closePath();
+
+      context.fillStyle = cssColor(color);
+      context.fill();
+    }
   }
 }

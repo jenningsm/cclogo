@@ -1,10 +1,11 @@
 
 #logo {
-  height: 100%;
-  width: 100%;
-  position: absolute;
   text-align: center;
   overflow: hidden;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
 }
 
 body {

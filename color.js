@@ -36,19 +36,23 @@ function getColor(){
   for(var i = 0, j = 0; i < options.length; i++){
    if(i != last){
       if(rand < (j+1) / (options.length -1)){
-        var r = (Math.random() - .5) * variance + options[i][0];
-        var g = (Math.random() - .5) * variance + options[i][1];
-        var b = (Math.random() - .5) * variance + options[i][2];
-        last = i;
+        var rgb = [];
         var mult = 1 - 180 / 255;
-        r = r + mult * (255 - r);
-        g = g + mult * (255 - g);
-        b = b + mult * (255 - b);
-        return [r,g,b,255];
+        for(var k = 0; k < 3; k++){
+          rgb[k] = (Math.random() - .5) * variance + options[i][k];
+          rgb[k] = Math.round(rgb[k] + mult * (255 - rgb[k]));
+        }
+        rgb.push(255);
+        last = i;
+        return rgb;
       }
       j++;
     }
   }
+}
+
+function cssColor(color){
+  return 'rgba(' + color[0] + ',' +  color[1] + ',' +  color[2] + ',' + (color[3] / 255) + ')';
 }
 
 function gs(alpha){
