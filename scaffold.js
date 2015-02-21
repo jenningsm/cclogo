@@ -143,11 +143,14 @@ function insertField(arr, field){
   d: a two member array containing the two distances
 */
 function pickSpot(target, d){
-  var extra = .05 + Math.random() * .2;
+  var extras = [];
+  for(var i = 0; i < 2; i++){
+    extras.push(.05 + Math.random() * .2);
+  }
   if(Math.random() > d[0] / (d[0] + d[1])){
-    return [target - d[0] * (1 + extra) , target + d[0] * extra];
+    return [target - d[0] * (1 + extras[0]) , target + d[0] * extras[1]];
   } else {
-    return [target - d[1] * extra, target + d[1] * (1 + extra)];
+    return [target - d[1] * extras[0], target + d[1] * (1 + extras[1])];
   }
 }
 

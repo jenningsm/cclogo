@@ -12,33 +12,61 @@ function setup(){
 
   var scafcolor = [202, 202, 202, 255];
 
-  var scale = 1;
-  var spacing = scale * 5.5 + 7 * Math.sqrt(scale);
-  //var spacing = 12.5 * Math.sqrt(scale);
+  var scale = 1.5;
+  var spacing = scale * 12 + 1.5 * Math.sqrt(scale);
   var gapsize = spacing * .9;
   var aRadWidth = 25 * scale;
-  var lineWidth = sqrt(spacing) * .24 + .17 * spacing;
-  //var lineWidth = spacing * .25;
+  var lineWidth = sqrt(spacing) * .2 + .15 * spacing;
   var numLayers = 3;
-  var round = 2;
+  var round = 2 * scale;
   var circRad = 40 * scale;
 
+  /* draw the innermost circle and the surrounding scaffolding */
   var cl = getColor();
   fill(cl[0], cl[1], cl[2], cl[3]);
   noStroke();
   var insideRad = aRadWidth * 1;
   myArc(center, circRad - insideRad / 2, 0, insideRad, 2 * Math.PI, 0)(getColor());
   myArc(center, circRad + spacing * .5, 0, lineWidth, 2 * Math.PI, 0)(scafcolor);
-  myArc(center, circRad - (insideRad + spacing * .25 + aRadWidth * .08), 0, lineWidth, 2 * Math.PI, 0)(scafcolor);
+  myArc(center, circRad - (insideRad + spacing * .2 + aRadWidth * .055 + lineWidth * .5), 0, lineWidth, 2 * Math.PI, 0)(scafcolor);
 
+  /*                  -------------------                    */
+
+
+  /* create the arcs and scaffolding */
   var radius = circRad + aRadWidth * .5 + spacing;
-  var breaks = [];
+  var breaks = createBreaks(numLayers);
+  var scaf = [];
+  radius = circRad + aRadWidth * .5 + spacing;
+  for(var i = 0; i < numLayers; i++){
 
+    arcs = arcs.concat(layer(center, radius, aRadWidth, breaks[i], gapsize, myArc, round));
+    var b = i+1 === breaks.length ? [] : breaks[i+1];
+    scaf = scaf.concat(scaffold(center, radius, aRadWidth + spacing, lineWidth, breaks[i], b));
+
+    radius += aRadWidth + spacing;
+  }
+  /*         ----------------         */
+
+
+  /* draw */
+  for(var i = 0; i < scaf.length; i++){
+    scaf[i](scafcolor);
+  }
+
+  for(var i = 0; i < arcs.length; i++){
+    arcs[i](getColor());
+  }
+  /* ---- */
+}
+
+
+function createBreaks(numLayers){
+  var breaks = [];
   for(var i = 0; i < numLayers; i++){
 
     var numbreaks = 3 + i * 2;
-
-    var nextbreak = [];
+    var nextbreak;
     var apart;
 
     do {
@@ -73,27 +101,7 @@ function setup(){
         }
       }
     } while (!apart);
-  
     breaks.push(nextbreak);
-    radius += aRadWidth + spacing;
   }
-
-  var scaf = [];
-  radius = circRad + aRadWidth * .5 + spacing;
-  for(var i = 0; i < numLayers; i++){
-
-    arcs = arcs.concat(layer(center, radius, aRadWidth, breaks[i], gapsize, myArc, round));
-    var b = i+1 === breaks.length ? [] : breaks[i+1];
-    scaf = scaf.concat(scaffold(center, radius, aRadWidth + spacing, lineWidth, breaks[i], b));
-
-    radius += aRadWidth + spacing;
-  }
-
-  for(var i = 0; i < scaf.length; i++){
-    scaf[i](scafcolor);
-  }
-
-  for(var i = 0; i < arcs.length; i++){
-    arcs[i](getColor());
-  }
+  return breaks;
 }
