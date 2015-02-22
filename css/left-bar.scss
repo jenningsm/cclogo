@@ -1,0 +1,84 @@
+
+$mult: .97;
+$bar-color: rgb(205 * $mult, 255 * $mult, 255 * $mult);
+
+#leftbar {
+  min-height: 100%;
+  width: $left-bar-width;
+  position: absolute;
+  left: 0;
+  background-color: $bar-color;
+  border-right: 2px solid #D0D0D0;
+}
+
+$spacing: 25px;
+
+
+#color-options {
+  padding-bottom: $spacing;
+  position: relative;
+  width: 100%;
+}
+#size-options {
+  position: relative;
+  width: 100%;
+}
+
+
+$option-align: 22%;
+$font-size: 1em;
+
+#regenerate {
+  $theleft: $option-align * 1;
+  width: 100% - 2 * $theleft;
+  left: $theleft;
+  height: 20px;
+  display: table;
+  border: 1px solid #A0A0A0;
+  position: relative;
+  margin-top: $spacing * 1.5;
+  transition: background .5s ease-in-out;
+  background: white;
+}
+
+#regenerate:hover{
+  background: rgb(215, 255, 225);
+}
+
+#regenerate-text {
+  text-align: center;
+  vertical-align: middle;
+  display: table-cell;
+}
+
+.option {
+  position: relative;
+  font-size: $font-size;
+  width: 100%;
+  height: $font-size * 1.75;
+  padding-left: $option-align;
+  transition: background 1s ease-in-out, color 1s ease-in-out;
+  box-sizing: padding-box;
+}
+.option:hover {
+  background: white;
+}
+
+.break {
+  position: relative;
+  left: $option-align;
+  width:  (100% - 2 * $option-align);
+  height: 3px;
+  background: #B0B0B0;
+  background: white;
+  margin-top: $spacing * 1.2;
+  margin-bottom: $spacing * 1.2;
+}
+
+
+#info {
+  font-size: .9em;
+  padding-left: $option-align;
+  padding-right: $option-align;
+  text-align: justify;
+}

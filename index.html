@@ -1,0 +1,51 @@
+<html>
+<head>
+<link href='http://fonts.googleapis.com/css?family=Titillium+Web:300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="css/h.css">
+</head>
+<body>
+<div id="leftbar">
+  <div id="regenerate">
+    <div id="regenerate-text">Regenerate</div>
+  </div>
+  <div class="break"></div>
+  <div id="color-options">
+    <div id="color" class='option'>Color</div>
+    <div id="black-white" class='option'>Black+White</div>
+    <div id="grayscale" class='option'>Grayscale</div>
+  </div>
+  <div id="size-options">
+    <div id="small" class='option'>Small</div>
+    <div id="medium" class='option'>Medium</div>
+    <div id="large" class='option'>Large</div>
+  </div>
+  <div class="break"></div>
+  <div id="info">
+    A potential logo for the Creative Coders group. The logo is generative; each time it is created slightly different.
+   <br/><br/>  
+   The large, rounded, colorful arcs communicate the creative aspect of the group while the network of thin, grey lines speaks
+   to the technical side of the group.
+   <br/><br/>
+   This implementation is done in vanilla javascript and writes to a canvas element, but it could be modified to output SVG instead.
+   <br/><br/>
+   Github: github.com/woefij
+  </div>
+</div>
+
+<div id="main">
+  <canvas id="logo" height="500px" width="500px"></canvas>
+</div>
+
+<script src="shuffle.js"></script>
+<script src="arcComposers.js"></script>
+<script src="larc.js"></script>
+<script src="layer.js"></script>
+<script src="lineout.js"></script>
+<script src="color.js"></script>
+<script src="scaffold.js"></script>
+<script src="breaks.js"></script>
+<script src="composite.js"></script>
+<script src="action.js"></script>
+<script src="logo.js"></script>
+</body>
+</html>

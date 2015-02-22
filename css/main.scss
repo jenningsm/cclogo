@@ -1,0 +1,21 @@
+
+@function gs($alpha){
+  @return rgb($alpha, $alpha, $alpha);
+}
+
+$left-bar-width: 25%;
+$font-color: #404040;
+
+
+@import 'left-bar';
+@import 'right';
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 300;
+  color: $font-color;
+}
+
+
