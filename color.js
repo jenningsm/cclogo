@@ -26,27 +26,25 @@ var black = [[0, 0, 0]];
 
 var ngreenblues = [h1, h2, h3, h4, h5];
 
-var last = 0;
-function getColor(){
-  var rand = Math.random();
-  var variance = 0;
-
-  var options = ngreenblues;
-
-  for(var i = 0, j = 0; i < options.length; i++){
-   if(i != last){
-      if(rand < (j+1) / (options.length -1)){
-        var rgb = [];
-        var mult = 1 - 180 / 255;
-        for(var k = 0; k < 3; k++){
-          rgb[k] = (Math.random() - .5) * variance + options[i][k];
-          rgb[k] = Math.round(rgb[k] + mult * (255 - rgb[k]));
+function colorGen(colorSet){
+  var last = 0;
+  return function(){
+    var rand = Math.random();
+  
+    for(var i = 0, j = 0; i < colorSet.length; i++){
+     if(i != last){
+        if(rand < (j+1) / (colorSet.length -1)){
+          var rgb = [];
+          var mult = 1 - 180 / 255;
+          for(var k = 0; k < 3; k++){
+            rgb[k] = colorSet[i][k];
+            rgb[k] = Math.round(rgb[k] + mult * (255 - rgb[k]));
+          }
+          last = i;
+          return rgb;
         }
-        rgb.push(255);
-        last = i;
-        return rgb;
+        j++;
       }
-      j++;
     }
   }
 }
