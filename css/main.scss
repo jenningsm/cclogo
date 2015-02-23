@@ -14,6 +14,12 @@
   user-select: none;
 }
 
+@mixin box-sizing($sizing){
+  -moz-box-sizing: $sizing;
+  -webkit-box-sizing: $sizing;
+  box-sizing: $sizing;
+}
+
 $left-bar-width: 25%;
 $font-color: #404040;
 

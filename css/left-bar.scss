@@ -9,7 +9,7 @@ $bar-color: rgb(205 * $mult, 255 * $mult, 255 * $mult);
   left: 0;
   background-color: $bar-color;
   border-right: 2px solid #D0D0D0;
-  box-sizing: border-box;
+  @include box-sizing(border-box);
 }
 
 $spacing: 25px;
@@ -19,10 +19,12 @@ $spacing: 25px;
   padding-bottom: $spacing;
   position: relative;
   width: 100%;
+  overflow: hidden;
 }
 #size-options {
   position: relative;
   width: 100%;
+  overflow: hidden;
 }
 
 
@@ -46,7 +48,12 @@ $font-size: 1em;
   display: table;
   border: 1px solid #B0B0B0;
   position: relative;
+
+  -o-transition: background .5s ease-in-out;
+  -moz-transition: background .5s ease-in-out;
+  -webkit-transition: background .5s ease-in-out;
   transition: background .5s ease-in-out;
+
   background: white;
   @include clickable();
 }
@@ -69,7 +76,7 @@ $font-size: 1em;
   left: $left;
   height: $font-size * 1.75;
   padding-left: $option-align - $left;
-  box-sizing: padding-box;
+  @include box-sizing(padding-box);
   @include clickable();
 }
 
