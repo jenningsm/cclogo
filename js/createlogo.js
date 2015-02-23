@@ -1,4 +1,4 @@
-function action(colorSet, scafcolor, scale, center){
+function createLogo(colorSet, scafcolor, scale, center, cb){
   var logo = composite(scale, center);
   var arcColors = colorGen(ngreenblues);
   
@@ -16,7 +16,9 @@ function action(colorSet, scafcolor, scale, center){
 
   var pieces = shuffle(arcs.concat(scaffolding));
 
-  fullFade(pieces, true, .01, 30);
+  fullFade(pieces, true, .01, 30, cb);
+
+  return function(x){ fullFade(pieces, false, .02, 30, x) };
 
 }
 
@@ -33,10 +35,10 @@ function getFadeFunction(piece, dir, speed, start, totalTime){
   }
 }
 
-function fullFade(pieces, dir, speed, totalTime){
+function fullFade(pieces, dir, speed, totalTime, cb){
   var painters = [];
   for(var j = 0; j < pieces.length; j++){
-    painters.push(getFadeFunction(pieces[j], true, speed, j * totalTime / pieces.length,  totalTime));
+    painters.push(getFadeFunction(pieces[j], dir, speed, j * totalTime / pieces.length,  totalTime));
   }
 
   function run(frame){
@@ -46,6 +48,10 @@ function fullFade(pieces, dir, speed, totalTime){
      }
      if(frame <= Math.ceil(totalTime + 1 / speed)){
        requestAnimationFrame(function() { run(frame+1) });
+     } else {
+       if(cb !== null){
+         cb();
+       }
      }
   }
 

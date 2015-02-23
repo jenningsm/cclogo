@@ -34,7 +34,7 @@ $font-size: 1em;
   left: $theleft;
   height: 20px;
   display: table;
-  border: 1px solid #A0A0A0;
+  border: 1px solid #B0B0B0;
   position: relative;
   margin-top: $spacing * 1.5;
   transition: background .5s ease-in-out;
@@ -42,7 +42,7 @@ $font-size: 1em;
 }
 
 #regenerate:hover{
-  background: rgb(215, 255, 225);
+  background: rgb(175, 255, 195);
 }
 
 #regenerate-text {
@@ -52,16 +52,14 @@ $font-size: 1em;
 }
 
 .option {
+  $left: $option-align * .5;
   position: relative;
   font-size: $font-size;
-  width: 100%;
+  width: 100% - $left;
+  left: $left;
   height: $font-size * 1.75;
-  padding-left: $option-align;
-  transition: background 1s ease-in-out, color 1s ease-in-out;
+  padding-left: $option-align - $left;
   box-sizing: padding-box;
-}
-.option:hover {
-  background: white;
 }
 
 .break {

@@ -5,7 +5,7 @@
 </head>
 <body>
 <div id="leftbar">
-  <div id="regenerate">
+  <div id="regenerate" onclick="newLogo()">
     <div id="regenerate-text">Regenerate</div>
   </div>
   <div class="break"></div>
@@ -33,19 +33,22 @@
 </div>
 
 <div id="main">
-  <canvas id="logo" height="500px" width="500px"></canvas>
+  <canvas id="logo" height="700px" width="700px"></canvas>
 </div>
 
-<script src="shuffle.js"></script>
-<script src="arcComposers.js"></script>
-<script src="larc.js"></script>
-<script src="layer.js"></script>
-<script src="lineout.js"></script>
-<script src="color.js"></script>
-<script src="scaffold.js"></script>
-<script src="breaks.js"></script>
-<script src="composite.js"></script>
-<script src="action.js"></script>
-<script src="logo.js"></script>
+<script src="js/util/shuffle.js"></script>
+<script src="js/util/utils.js"></script>
+<script src="js/components/arcComposers.js"></script>
+<script src="js/components/larc.js"></script>
+<script src="js/compose/layer.js"></script>
+<script src="js/components/lineout.js"></script>
+<script src="js/color.js"></script>
+<script src="js/compose/scaffold.js"></script>
+<script src="js/compose/breaks.js"></script>
+<script src="js/compose/composite.js"></script>
+<script src="js/createlogo.js"></script>
+<script src="js/logo.js"></script>
+<script src="js/page/buttons.js"></script>
+<script src="js/page/setuppage.js"></script>
 </body>
 </html>

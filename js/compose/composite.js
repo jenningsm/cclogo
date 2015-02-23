@@ -3,7 +3,7 @@ function composite(scale, center){
   var arcs = []
   var scaf = [];
   
-  var spacing = scale * 12 + 1.5 * Math.sqrt(scale);
+  var spacing = 2 + scale * 10 + 1.5 * Math.sqrt(scale);
   var gapsize = spacing * .9;
   var aRadWidth = 25 * scale;
   var lineWidth = Math.sqrt(spacing) * .2 + .15 * spacing;
