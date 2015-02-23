@@ -17,10 +17,10 @@ var gy = [[225, 215, 170]];
 var black = [[0, 0, 0]];
 
 var greys = [];
-greys.push([128, 128, 128]);
+var base = 170;
+var step = 12;
+greys.push([base, base, base]);
 for(var i = 0; i < 3; i++){
-  var step = 16;
-  var base = 145;
   var val = step * i + base;
   var negval = base - step * i;
   greys.push([val, val, val]);
