@@ -4,7 +4,8 @@
   position: absolute;
   left: 0;
   background-color: #c6f7f7;
-  border-right: 2px solid #D0D0D0; }
+  border-right: 2px solid #D0D0D0;
+  box-sizing: border-box; }
 
 #color-options {
   padding-bottom: 25px;
@@ -88,14 +89,6 @@
   padding-right: 22%;
   text-align: justify;
   padding-bottom: 25px; }
-
-#logo {
-  text-align: center;
-  overflow: hidden;
-  left: 47%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  position: absolute; }
 
 #main {
   position: absolute;
