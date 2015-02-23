@@ -13,9 +13,19 @@ var h4 = [21, 232, 75];
 var h5 = [30, 222, 22];
 
 var greenblues = [g1, g2, g3, g4, g5 ];
-var grey = [[160, 160, 160]];
 var gy = [[225, 215, 170]];
 var black = [[0, 0, 0]];
+
+var greys = [];
+greys.push([128, 128, 128]);
+for(var i = 0; i < 3; i++){
+  var step = 16;
+  var base = 145;
+  var val = step * i + base;
+  var negval = base - step * i;
+  greys.push([val, val, val]);
+  greys.push([negval, negval, negval]);
+}
 
 var ngreenblues = [h1, h2, h3, h4, h5];
 ngreenblues = lighten(ngreenblues, 1 - 180 / 255);
@@ -24,18 +34,26 @@ function colorGen(colorSet){
   var last = 0;
   return function(){
     var rand = Math.random();
-  
-    for(var i = 0, j = 0; i < colorSet.length; i++){
-     if(i != last){
-        if(rand < (j+1) / (colorSet.length -1)){
-          var rgb = [];
-          for(var k = 0; k < 3; k++){
-            rgb[k] = Math.round(colorSet[i][k]);
+   
+    if(colorSet.length <= 2){
+      var rgb = colorSet[Math.floor(Math.random() * colorSet.length)];
+      for(var i = 0; i < rgb.length; i++){
+        rgb[i] = Math.round(rgb[i]);
+      }
+      return rgb;
+    } else {  
+      for(var i = 0, j = 0; i < colorSet.length; i++){
+       if(i != last){
+          if(rand < (j+1) / (colorSet.length -1)){
+            var rgb = [];
+            for(var k = 0; k < 3; k++){
+              rgb[k] = Math.round(colorSet[i][k]);
+            }
+            last = i;
+            return rgb;
           }
-          last = i;
-          return rgb;
+          j++;
         }
-        j++;
       }
     }
   }
@@ -49,7 +67,7 @@ function cssColorRounded(color){
 }
 
 function gs(alpha){
-  return [alpha, alpha, alpha, 255];
+  return [alpha, alpha, alpha];
 }
 
 function lighten(colorSet, alpha){

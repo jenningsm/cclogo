@@ -1,6 +1,6 @@
 function createLogo(colorSet, scafcolor, scale, center, cb){
   var logo = composite(scale, center);
-  var arcColors = colorGen(ngreenblues);
+  var arcColors = colorGen(colorSet);
   
   var arcs = logo.arcs;
   var scaffolding = logo.scaffolding;
