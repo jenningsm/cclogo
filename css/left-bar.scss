@@ -39,6 +39,7 @@ $font-size: 1em;
   margin-top: $spacing * 1.5;
   transition: background .5s ease-in-out;
   background: white;
+  @include clickable();
 }
 
 #regenerate:hover{
@@ -60,6 +61,7 @@ $font-size: 1em;
   height: $font-size * 1.75;
   padding-left: $option-align - $left;
   box-sizing: padding-box;
+  @include clickable();
 }
 
 .break {
@@ -79,4 +81,5 @@ $font-size: 1em;
   padding-left: $option-align;
   padding-right: $option-align;
   text-align: justify;
+  padding-bottom: $spacing;
 }

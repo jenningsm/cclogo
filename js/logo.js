@@ -10,8 +10,13 @@ var logo = composite(1, center);
 
 var scafColor = [202, 202, 202];
 
-var fadeOut = createLogo(ngreenblues, scafColor, 1, center, null);
+var fadeOut = null;
+var hold = createLogo(ngreenblues, scafColor, 1, center, function() { fadeOut = hold});
 
 function newLogo(){
-  fadeOut(function(){ fadeOut = createLogo(ngreenblues, scafColor, 1, center, null)}); 
+  if(fadeOut !== null){
+    hold = fadeOut;
+    fadeOut = null;
+    hold(function(){ hold = createLogo(ngreenblues, scafColor, 1, center, function() { fadeOut = hold})}); 
+  }
 }
