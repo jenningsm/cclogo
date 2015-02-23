@@ -18,6 +18,7 @@ var gy = [[225, 215, 170]];
 var black = [[0, 0, 0]];
 
 var ngreenblues = [h1, h2, h3, h4, h5];
+ngreenblues = lighten(ngreenblues, 1 - 180 / 255);
 
 function colorGen(colorSet){
   var last = 0;
@@ -28,10 +29,8 @@ function colorGen(colorSet){
      if(i != last){
         if(rand < (j+1) / (colorSet.length -1)){
           var rgb = [];
-          var mult = 1 - 180 / 255;
           for(var k = 0; k < 3; k++){
-            rgb[k] = colorSet[i][k];
-            rgb[k] = Math.round(rgb[k] + mult * (255 - rgb[k]));
+            rgb[k] = Math.round(colorSet[i][k]);
           }
           last = i;
           return rgb;
@@ -51,4 +50,15 @@ function cssColorRounded(color){
 
 function gs(alpha){
   return [alpha, alpha, alpha, 255];
+}
+
+function lighten(colorSet, alpha){
+  var ret = [];
+  for(var i = 0; i < colorSet.length; i++){
+    ret.push([]);
+    for(var k = 0; k < 3; k++){
+      ret[i].push(colorSet[i][k] + alpha * (255 - colorSet[i][k]));
+    }
+  }
+  return ret;
 }
