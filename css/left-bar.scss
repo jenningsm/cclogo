@@ -72,11 +72,10 @@ $font-size: 1em;
   $left: $option-align * .5;
   position: relative;
   font-size: $font-size;
-  width: 100% - $left;
+  width: 100% - $option-align;
   left: $left;
   height: $font-size * 1.75;
   padding-left: $option-align - $left;
-  @include box-sizing(padding-box);
   @include clickable();
 }
 

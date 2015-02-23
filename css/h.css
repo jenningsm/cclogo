@@ -59,13 +59,10 @@
 .option {
   position: relative;
   font-size: 1em;
-  width: 89%;
+  width: 78%;
   left: 11%;
   height: 1.75em;
   padding-left: 11%;
-  -moz-box-sizing: padding-box;
-  -webkit-box-sizing: padding-box;
-  box-sizing: padding-box;
   cursor: pointer;
   cursor: hand;
   -webkit-user-select: none;
