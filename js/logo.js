@@ -5,8 +5,6 @@ context = cvs.getContext("2d");
 context.canvas.width = cvsContainer.clientWidth;
 context.canvas.height = cvsContainer.clientHeight;
 
-var dim = Math.max(cvs.clientWidth, cvs.clientHeight);
-//background(255);
 var center = [.94 * cvs.width / 2, cvs.height / 2];
 
 var scafColor = [202, 202, 202];
