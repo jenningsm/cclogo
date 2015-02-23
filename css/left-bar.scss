@@ -72,15 +72,23 @@ $font-size: 1em;
   @include clickable();
 }
 
-.break {
+@mixin break($size){
   position: relative;
-  left: $option-align;
-  width:  (100% - 2 * $option-align);
+  $width-space: 100% - 2 * $option-align;
+  left: $option-align + $width-space * (1 - $size) * .5;
+  width:  $size * (100% - 2 * $option-align);
   height: 3px;
-  background: #B0B0B0;
   background: white;
   margin-top: $spacing * 1.2;
   margin-bottom: $spacing * 1.2;
+}
+
+.break {
+  @include break(1);
+}
+
+.small-break {
+  @include break(.5);
 }
 
 

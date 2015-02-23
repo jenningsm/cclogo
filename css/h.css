@@ -69,7 +69,15 @@
   left: 22%;
   width: 56%;
   height: 3px;
-  background: #B0B0B0;
+  background: white;
+  margin-top: 30px;
+  margin-bottom: 30px; }
+
+.small-break {
+  position: relative;
+  left: 36%;
+  width: 28%;
+  height: 3px;
   background: white;
   margin-top: 30px;
   margin-bottom: 30px; }
