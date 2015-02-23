@@ -1,6 +1,6 @@
 
 function composite(scale, center){
-  var arcs = []
+  var arcs = [];
   var scaf = [];
   
   var spacing = 2 + scale * 10 + 1.5 * Math.sqrt(scale);
@@ -33,17 +33,6 @@ function composite(scale, center){
   }
   /*         ----------------         */
   
-  
-  /* draw */
-/*  for(var i = 0; i < scaf.length; i++){
-    scaf[i](scafcolor);
-  }
-  
-  for(var i = 0; i < arcs.length; i++){
-    arcs[i](getColor());
-  }*/
-  /* ---- */
-
   return {'arcs' : arcs, 'scaffolding' : scaf};
 
 } 
