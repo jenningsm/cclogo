@@ -12,6 +12,7 @@ var fadeOut = null;
 var hold = createLogo(ngreenblues, scafColor, 1, center, function() { fadeOut = hold});
 
 var arcColors = ngreenblues;
+var scale = 1;
 
 function setColorSet(id){
   if(id === 'color'){
@@ -27,10 +28,20 @@ function setColorSet(id){
   }
 }
 
+function setScale(size){
+  if(size === 'small'){
+    scale = .5;
+  } else if (size === 'medium'){
+    scale = 1;
+  } else {
+    scale = 1.5;
+  }
+}
+
 function newLogo(){
   if(fadeOut !== null){
     hold = fadeOut;
     fadeOut = null;
-    hold(function(){ hold = createLogo(arcColors, scafColor, 1, center, function() { fadeOut = hold})}); 
+    hold(function(){ hold = createLogo(arcColors, scafColor, scale, center, function() { fadeOut = hold})}); 
   }
 }

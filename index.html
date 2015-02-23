@@ -5,6 +5,11 @@
 </head>
 <body>
 <div id="leftbar">
+  <div class="break"></div>
+  <div id="title">
+    CREATIVE CODERS LOGO
+  </div>
+  <div class="break"></div>
   <div id="regenerate" onclick="newLogo()">
     <div id="regenerate-text">Regenerate</div>
   </div>
@@ -15,18 +20,18 @@
     <div id="grayscale" class='option' onClick="setColorSet('gs')">Grayscale</div>
   </div>
   <div id="size-options">
-    <div id="small" class='option'>Small</div>
-    <div id="medium" class='option'>Medium</div>
-    <div id="large" class='option'>Large</div>
+    <div id="small" class='option' onclick="setScale('small')">Small</div>
+    <div id="medium" class='option' onclick="setScale('medium')">Medium</div>
+    <div id="large" class='option' onclick="setScale('large')">Large</div>
   </div>
   <div class="break"></div>
   <div id="info">
-    A potential logo for the Portland Creative Coders group. The logo is generative; each time it is created slightly different.
+    A logo I created for the Portland Creative Coders group. It is a generative logo; a new version is randomly composed each time it is viewed.
    <br/><br/>  
-   The large, rounded, colorful arcs communicate the creative aspect of the group while the network of thin, grey lines speaks
-   to the technical side of the group.
+   The large, rounded, colorful arcs communicate the creative aspect of the group while the network of thin, grey lines speaks to the group's
+   technical side.
    <br/><br/>
-   This implementation is done in vanilla javascript and writes to a canvas element, but it could be modified to output SVG instead.
+   This implementation is done in vanilla javascript and draws to a canvas element, but it could be modified to output SVG instead.
    <br/><br/>
    Github: github.com/woefij
   </div>

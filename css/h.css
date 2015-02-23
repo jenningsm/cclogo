@@ -15,6 +15,14 @@
   position: relative;
   width: 100%; }
 
+#title {
+  text-align: center;
+  font-size: 1.3em;
+  padding-left: 22%;
+  padding-right: 22%;
+  margin-bottom: -12.5px;
+  margin-top: -12.5px; }
+
 #regenerate {
   width: 56%;
   left: 22%;
@@ -22,7 +30,6 @@
   display: table;
   border: 1px solid #B0B0B0;
   position: relative;
-  margin-top: 37.5px;
   transition: background .5s ease-in-out;
   background: white;
   cursor: pointer;
